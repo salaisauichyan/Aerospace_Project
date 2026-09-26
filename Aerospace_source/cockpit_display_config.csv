@@ -1,0 +1,5 @@
+display_unit_id,display_type,screen_resolution,refresh_rate_hz,bus_connection
+DU-01,Primary Flight Display (PFD),2048x1536,60,ARINC-429_CH1
+DU-02,Multi-Function Display (MFD),2048x1536,60,ARINC-429_CH2
+DU-03,Engine Indicating & Crew Alerting System (EICAS),1024x768,30,MIL-STD-1553_A
+DU-04,Navigation Display (ND),1920x1080,60,ARINC-429_CH1
