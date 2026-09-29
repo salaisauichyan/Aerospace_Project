@@ -41,9 +41,3 @@ This project is organized into modular notebooks following the Medallion Archite
   * Auditability through tracking `ingestion_timestamp` and `processed_timestamp`.
 
 ---
-
-## 🚀 Getting Started
-
-1. Clone this repository or import it directly into your **Databricks Workspace**.
-2. Ensure your workspace storage path matches the source configuration in **`Aerospace_bronze.ipynb`**.
-3. Run the notebooks sequentially from **Bronze** through **Final Reporting** to execute the complete pipeline.
