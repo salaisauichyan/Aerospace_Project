@@ -57,7 +57,7 @@ This project is organized into modular notebooks following the Medallion Archite
 3. **Silver Layer (Cleaning & Transformation):** Cleans null values, standardizes data types, enforces schemas, and deduplicates records.
 4. **Data Quality Checks:** Validates row counts, null thresholds, and business rules before promoting data to the Gold layer.
 5. **Gold Layer (Aggregations):** Builds business-level aggregations and dimensional models optimized for analytics.
-6. **Final Reporting Layer:** Prepares curated, reporting-ready tables for downstream BI dashboards (Power BI).
+6. **Final Reporting Layer:** Prepares curated, reporting-ready tables for downstream BI dashboards.
 
 ---
 
