@@ -8,7 +8,7 @@ An enterprise-grade, end-to-end data engineering pipeline built on **Databricks*
 
 This project follows the **Medallion Architecture** pattern, divided into clean, modular notebooks stored in this repository:
 
-flowchart LR
+```flowchart LR
     subgraph Local["Local Docker Environment"]
         AF["Apache Airflow\n(Scheduler & DAG)"]
     end
@@ -21,7 +21,7 @@ flowchart LR
         E -->|Final Reporting Notebook| F[("Reporting Ready")]
     end
 
-    AF -.->|"Triggers via REST API / PAT"| DBX
+    AF -.->|"Triggers via REST API / PAT"| DBX```
 
 
 ## 📂 Repository Layout
