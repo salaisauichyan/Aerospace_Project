@@ -50,3 +50,18 @@ This project is organized into modular notebooks following the Medallion Archite
   * Auditability through tracking `ingestion_timestamp` and `processed_timestamp`.
 
 ---
+
+## Project Structure
+
+```text
+├── dags/
+│   └── aerospace_databricks_dag.py   # Airflow DAG triggering Databricks Job
+├── notebooks/
+│   ├── 01_bronze_ingestion.py        # Raw CSV to Bronze Delta table
+│   ├── 02_silver_cleaning.py         # Data cleaning & deduplication
+│   ├── 03_data_quality_checks.py     # Automated validation checks
+│   ├── 04_gold_aggregations.py       # Business metrics & aggregations
+│   └── 05_final_reporting.py         # Reporting-ready tables
+├── docker-compose.yaml               # Local Airflow Docker setup
+└── README.md
+```
