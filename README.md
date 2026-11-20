@@ -8,20 +8,22 @@ An enterprise-grade, end-to-end data engineering pipeline built on **Databricks*
 
 This project follows the **Medallion Architecture** pattern, divided into clean, modular notebooks stored in this repository:
 
-```mermaid flowchart LR
+```mermaid
+flowchart LR
     subgraph Local["Local Docker Environment"]
-        AF["Apache Airflow\n(Scheduler & DAG)"]
+        AF["Apache Airflow<br/>(Scheduler & DAG)"]
     end
 
     subgraph DBX["Databricks Workspace (Unity Catalog)"]
-        A["Aerospace_source\n(Raw CSVs in Volume)"] -->|Bronze Notebook| B[("Bronze Layer\n(Raw Delta)")]
-        B -->|Silver Notebook| C[("Silver Layer\n(Cleaned)")]
-        C -->|Data Quality Notebook| D[("Data Quality\nChecks")]
-        D -->|Gold Notebook| E[("Gold Layer\n(Aggregations)")]
+        A["Aerospace_source<br/>(Raw CSVs in Volume)"] -->|Bronze Notebook| B[("Bronze Layer<br/>(Raw Delta)")]
+        B -->|Silver Notebook| C[("Silver Layer<br/>(Cleaned)")]
+        C -->|Data Quality Notebook| D[("Data Quality<br/>Checks")]
+        D -->|Gold Notebook| E[("Gold Layer<br/>(Aggregations)")]
         E -->|Final Reporting Notebook| F[("Reporting Ready")]
     end
 
-    AF -.->|"Triggers via REST API / PAT"| DBX```
+    AF -.->|"Triggers via REST API / PAT"| DBX
+```
 
 
 ## 📂 Repository Layout
