@@ -43,11 +43,21 @@ This project is organized into modular notebooks following the Medallion Archite
 
 * **Processing Engine:** Apache Spark / PySpark
 * **Storage Format:** Delta Lake (ensuring ACID transactions, time-travel, and reliability)
-* **Data Governance:** Databricks Unity Catalog (`workspace.default.*`)
+* **Data Governance:** Databricks Unity Catalog - [Managed Volumes & Delta Tables] (`workspace.default.*`)
 * **Quality & Engineering Controls:**
   * Automated deduplication (`dropDuplicates`) and mandatory key validation (`dropna`).
   * Explicit type casting and string whitespace normalization (`F.trim`).
   * Auditability through tracking `ingestion_timestamp` and `processed_timestamp`.
+
+---
+
+## Pipeline Workflow
+1. **Airflow Orchestration (Local Docker):** A scheduled Airflow DAG connects to Databricks via a Personal Access Token (PAT) and triggers the Databricks Job workflow.
+2. **Bronze Layer (Ingestion):** Reads raw CSV files from the `Aerospace_source` Unity Catalog Volume and stores them as raw Delta tables with ingestion metadata.
+3. **Silver Layer (Cleaning & Transformation):** Cleans null values, standardizes data types, enforces schemas, and deduplicates records.
+4. **Data Quality Checks:** Validates row counts, null thresholds, and business rules before promoting data to the Gold layer.
+5. **Gold Layer (Aggregations):** Builds business-level aggregations and dimensional models optimized for analytics.
+6. **Final Reporting Layer:** Prepares curated, reporting-ready tables for downstream BI dashboards (Power BI).
 
 ---
 
@@ -64,4 +74,28 @@ This project is organized into modular notebooks following the Medallion Archite
 │   └── 05_final_reporting.py         # Reporting-ready tables
 ├── docker-compose.yaml               # Local Airflow Docker setup
 └── README.md
+
 ```
+
+## Setup & How to Run
+
+### 1. Databricks Setup
+1. Upload the notebooks from the `notebooks/` folder into your Databricks Workspace.
+2. Upload raw aerospace CSV files into your Unity Catalog Volume (`Aerospace_source`).
+3. Create a **Databricks Workflow Job** chaining the 5 notebooks in sequence (`Bronze -> Silver -> Data Quality -> Gold -> Final Reporting`) and copy the **Job ID**.
+4. Generate a **Personal Access Token (PAT)** under **User Settings > Developer > Access Tokens**.
+
+### 2. Local Airflow Setup (Docker)
+1. Start Apache Airflow locally using Docker Compose:
+   ```bash
+   docker-compose up -d
+   ```
+2. Open the Airflow UI at `http://localhost:8080`.
+3. Configure the Databricks connection under **Admin > Connections**:
+   * **Connection Id:** `databricks_default`
+   * **Connection Type:** `Databricks`
+   * **Host:** `https://<your-databricks-workspace-url>`
+   * **Password / Token:** `<your-databricks-pat>`
+4. Update the `job_id` in `dags/aerospace_databricks_dag.py` and unpause the DAG to run the pipeline.
+
+---
